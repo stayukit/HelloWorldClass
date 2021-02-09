@@ -1,22 +1,25 @@
 # binary classification
 # predict diabetes
 
-diabetes <- read.csv("diabetes.csv") # "<-" assign
+diabetes <- read.csv("diabetes.csv") # import dataset and assign "<-" to diabetes
 # load data set # ctrl+ent # 768 obs. of 9 variables
 head(diabetes)
 tail(diabetes)
 
 # review data types in our dataframe
-str(diabetes) # type: char
+str(diabetes) # str:structure /check dataset type
 
 diabetes$diabetes <- as.factor(diabetes$diabetes)
+# change type from char to Factor on diabetes column
+# and reassign to diabetes column
 str(diabetes) # type: Factor
 
 # table() count frequency
-table(diabetes$diabetes)
-table(diabetes$diabetes)/nrow(diabetes) #768
+table(diabetes$diabetes) # neg =500, pos=268
+table(diabetes$diabetes)/nrow(diabetes) # nrow=768
+# neg=0.6510, pos=0.3489
 
-# split data
+# split data to train and test
 set.seed(42)
 n <- nrow(diabetes)
 train_id <- sample(1:n, size = 0.8*n)
@@ -26,18 +29,25 @@ test_data <- diabetes[-train_id, ]
 # train model
 # glm for logistic reg. Print model, show value as coefficient
 logisticmodel <- glm(diabetes ~ glucose + insulin + age, data=train_data, family = "binomial")
-
+# binomial or binary classification: end-result expresses in 2 groups
 # test model. print model, show value as probability
 p <- predict(logisticmodel, newdata = test_data, type = "response")
 
 pdt <- ifelse(p > 0.5, "pos", "neg") # set threshold
-pdt[1:20]
+pdt[1:20] # print predict
 
-#pdt (predictoin) == test_data$diabetes (actual)
-mean(pdt == test_data$diabetes)
+# compare prediction to actual; pdt == test_data$diabetes
+mean(pdt == test_data$diabetes) # accuracy about 0.77
 
-# confusion matrix
-table(pdt,test_data$diabetes, dnn = c("prediction","actual"))
+# after train model, could build confusion matrix
+table(pdt,test_data$diabetes, dnn = c("predicted","actual"))
+#            actual
+# predicted  neg pos     # accuracy (87+32)/(87+23+12+32) = 0.77 
+#      neg   87  23      # recall 32/(23+32)
+#      pos   12  32      # precision 32/(12+32)
+                         # F-1 score 2*((precision*recall)/(precision+recall))
+
+# example of dataset
 # pregnant glucose pressure triceps
 # 1        6     148       72      35
 # 2        1      85       66      29
