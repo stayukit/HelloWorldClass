@@ -1,5 +1,5 @@
 # linear regression model, lm
-# binary linear regression: 1:1 y:x variable 
+ 
 imdb = read.csv("imdb.csv") # import dataset
 head(imdb)
 # score = f(length)
