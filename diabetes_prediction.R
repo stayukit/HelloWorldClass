@@ -1,7 +1,7 @@
 # binary classification
 # predict diabetes
 
-diabetes <- read.csv("diabetes.csv")
+diabetes <- read.csv("diabetes.csv") # "<-" assign
 # load data set # ctrl+ent # 768 obs. of 9 variables
 head(diabetes)
 tail(diabetes)
