@@ -6,14 +6,13 @@ head(penguins)
 penguins <- na.omit(penguins)
 
 # review structure
-
 str(penguins)
 
 # subset data (select column)
-# penguins[1:10, 1:3] # row, column
-# penguins[1:10, -c(2,8)]
+# penguins[1:10, 1:3] # select row 1-10, column 1-3
+# penguins[1:10, -c(2,8)] # not select column 2,8
 
-penguins <- penguins[ , -c(2,8)]
+penguins <- penguins[ , -c(2,8)] # select all row
 
 # split data
 set.seed(42)
@@ -33,4 +32,4 @@ p <- predict(tree_model_penguins, newdata=test_data, type="class")
 
 ## accuracy
 
-mean(p == test_data$species)
+mean(p == test_data$species) # accuracy 0.94
